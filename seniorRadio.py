@@ -3,31 +3,62 @@
 # 01/03/2020
 # Main program for seniorRadio project. Reads IO and plays internet radio streams using VLC
 #
-
+# changes by Tmra 9-dec-2022
+# left out the Led, added a shutdown button instead and 
+# also added LCD 16x02 for text output
 
 from gpiozero import LED, Button  # for rpi IO
 import json
 import urllib.request  # grabbing github json page
 import time  # for delays
 import subprocess  # for calling bash commands
-
 import sys
-sys.path.append("/home/pi/.local/lib/python3.7/site-packages/")  # PYTHONPATH fix to make sure it sees VLC package
+
+# adjust to your python version and user
+sys.path.append("/home/radiohead/.local/lib/python3.9/site-packages/")  # PYTHONPATH fix to make sure it sees VLC package
 
 import vlc  # python-vlc package, and VLC need to be installed
 
-url = "https://raw.githubusercontent.com/Bunborn/seniorRadio/master/internetStations.json"  # Change to your JSON online file!
+#extra shutdown button & LCD 16x2 
+from signal import signal, SIGTERM, SIGHUP, pause
+from  rpi_lcd import LCD
+
+lcd = LCD()
+
+def safe_exit(signum, frame):
+    exit(1)
+
+signal(SIGTERM, safe_exit)
+signal(SIGHUP, safe_exit)
+
+# list with radiostreams 
+url = "https://raw.githubusercontent.com/rspbrrypi/seniorRadio/master/internetStations.json"
+
+# list with stationNames
+url2 = "https://raw.githubusercontent.com/rspbrrypi/seniorRadio/master/stationNames.json"
 
 def buttonPress():
     player.pause()  # stops stream, resumes the stream on another press
 
+def shutdown():
+    lcd.text("Power off", 1)
+    player.stop()
+    lcd.clear()
+    subprocess.check_call(['sudo','poweroff']) # shutdown the pi
+
+def show_text(): 
+    current = radioState.get('stationSelected')
+    radiostation = str(stationNames[current])
+    lcd.text("Je luistert naar", 1) # change this as you like, it's the first line of your LCD screen
+    lcd.text(radiostation, 2) 
 
 def changeStation():
     player.stop()
+    lcd.clear()
     player.set_media(mediaList[stationSelected])
     saveState()
-    player.play()
-
+    player.play() 
+    show_text()
 
 def incrementStation(currentStation):
     if currentStation == (len(streamURLs) - 1):  # if last entry
@@ -108,25 +139,28 @@ def saveState():
         json.dump(radioState, f, indent=4)
 
 
-
 # SETUP
 
 # quick fix to give time for connection with bluetooth speaker on startup
 # may not need depending on how you are booting it up
-time.sleep(30)
+# time.sleep(30)
 
 # first, restart pulseaudio. Need to do this on almost every boot on my and many machines so just do it every time
-subprocess.call(["pulseaudio", "--kill"])
-time.sleep(0.5)
-subprocess.call(["pulseaudio", "--start"])
+# subprocess.call(["pulseaudio", "--kill"])
+# time.sleep(0.5)
+# subprocess.call(["pulseaudio", "--start"])
 time.sleep(0.5)
 
 
 # setup pins (https://pinout.xyz/ for reference)
-led = LED(pin=27)  # BCM pin
-led.on() # simply turn on when program runs
+# Pause button
 button = Button(pin=17, bounce_time=0.04, hold_time=0.2)  # BCM pin 17, push button
 button.when_pressed = buttonPress  # calls buttonPress function
+
+# Shutdown button 
+shutdownbutton = Button(pin=27, bounce_time=0.04, hold_time=0.2)
+shutdownbutton.when_held = shutdown # calls shutdown function
+
 pinA = Button(21, pull_up=True)  # Station rotary encoder dt pin connected to BCM pin 21
 pinB = Button(20, pull_up=True)  # Station rotary encoder clk pin connected to BCM pin 20
 pinC = Button(19, pull_up=True)  # Audio level rotary encoder dt pin connected to BCM pin 19
@@ -139,7 +173,7 @@ audioDialCountCW = 0
 audioDialCountCCW = 0
 
 # read json file and load data
-with open("radioState.json", "r") as f:
+with open("/home/radiohead/seniorRadio/radioState.json", "r") as f:
     radioState = json.load(f)
 with urllib.request.urlopen(url) as f:  # change your url for json file at top of this file
     internetStations = json.loads(f.read().decode())
@@ -148,6 +182,10 @@ audioLevel = radioState["audioLevel"]
 streamURLs = internetStations["stationLinks"]
 if stationSelected > len(streamURLs):  # not valid station anymore, outside range
     stationSelected = 0
+
+# List with radiostations voor LCD output
+with urllib.request.urlopen(url2) as g: 
+    stationNames = json.loads(g.read())
 
 # setup VLC
 instance = vlc.Instance('--input-repeat=-1', '--fullscreen')
@@ -160,6 +198,7 @@ for i in range(len(streamURLs)):
 player.audio_set_volume(audioLevel)
 player.set_media(mediaList[stationSelected])
 player.play()
+show_text()
 
 # rotary encoder handlers
 pinA.when_pressed = pinARising  # Register the station event handler for pin A
