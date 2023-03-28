@@ -38,7 +38,7 @@ I mainly used Dutch streams, most of them I found here: https://hendrikjansen.nl
    https://www.cyberciti.biz/faq/linux-execute-cron-job-after-system-reboot/
     Open a terminal and type crontab -e to open up the crontab.
     Add the following line:
-     @reboot sleep 180 && python3 /home/radio/seniorRadio/seniorRadio.py
+     @reboot sleep 180 && python3 /home/[put here your pi username]/seniorRadio/seniorRadio.py
     Save and exit. Reboot your pi. Change the time (180 seconds) to whatever time your OS needs to load before starting the radio.
 
 NB
