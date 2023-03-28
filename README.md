@@ -21,20 +21,20 @@ I mainly used Dutch streams, most of them I found here: https://hendrikjansen.nl
     * https://opensource.com/article/19/11/pyradio
     * https://projects-raspberry.com/fireside-internet-radio-player-for-elderly-users-built-with-raspberry-pi
 
-2. Install GIT 
+2. Install GIT   
     Open a terminal and clone this repo by typing: git clone https://github.com/rspbrrypi/seniorRadio.git
 
-3. Install VLC
+3. Install VLC   
    See: https://pimylifeup.com/raspberry-pi-vlc/
 
 4. (optional) Install a SOUNDCARD if you use a Pi Zero (I used a guitar interface adapter)
     Instructions you'll find here: https://circuitdigest.com/microcontroller-projects/how-to-use-usb-audio-device-and-microphone-on-raspberry-pi-zero-w
  
-5. LCD
+5. LCD  
   Connect your LCD-screen.  I used a 16x02 LCD screen with I2C backpack. 
   This video explains very simple how to connect it: https://youtu.be/DHbLBTRpTWM
  
-6. Setup to start your radio at boot with CRONTAB
+6. Setup to start your radio at boot with CRONTAB  
    https://www.cyberciti.biz/faq/linux-execute-cron-job-after-system-reboot/
     Open a terminal and type crontab -e to open up the crontab.
     Add the following line:
