@@ -1,15 +1,15 @@
 # seniorRadio
 Project to make an simple internet radio for Raspberry Pi; I used a Pi Zero W. Easy to use, and cheap in electrical costs.
-<img src="https://github.com/rspbrrypi/seniorRadio/blob/master/Pizero-internetradio.jpg?raw=true" width="200px" >
-It has 3 rotating knobs for volume, change channel and brightness for LCD-screen. 
-It also has a pause button and a shutdown button to safely turn of the Pi.
+<img src="https://github.com/rspbrrypi/seniorRadio/blob/master/Pizero-internetradio.jpg?raw=true" width="200px" >  
+The radio has 3 rotating knobs for volume, change channel and brightness for LCD-screen. 
+It also has a pause button and a shutdown button to safely turn of the Pi.  
 
 This project is mainly based on this seniorRadio Project: https://github.com/Bunborn/seniorRadio
 Difference is that I left out the LED. Instead I used that pin (17) for a *shutdown button* on my Raspberry Pi to completely turn of the radio and the Pi.
-Also I added a *LCD Screen* so you can see which station you're listening to.
+Also I added a *LCD Screen* so you can see which station you're listening to.  
 
 Finally I added another file: stationNames.json. This list contains exactly the same radiostations as InternetStations.json only with a prettier output for the LCD. 
-Each station can contain a max of 16 chars or it won't fit the screen. So if you change the InternetStations.json you must also change stationNames.json in the same order.---
+Each station can contain a max of 16 chars or it won't fit the screen. So if you change the InternetStations.json you must also change stationNames.json in the same order.   
 I mainly used Dutch streams, most of them I found here: https://hendrikjansen.nl/henk/streaming.html  But you can change them to your own favourite streaming radio channels.
     
 ## Roughly setup (for details, check the urls): 
