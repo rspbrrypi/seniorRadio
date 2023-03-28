@@ -9,7 +9,7 @@ Difference is that I left out the LED. Instead I used that pin (17) for a *shutd
 Also I added a *LCD Screen* so you can see which station you're listening to.
 
 Finally I added another file: stationNames.json. This list contains exactly the same radiostations as InternetStations.json only with a prettier output for the LCD. 
-Each station can contain a max of 16 chars or it won't fit the screen. So if you change the InternetStations.json you must also change stationNames.json in the same order.
+Each station can contain a max of 16 chars or it won't fit the screen. So if you change the InternetStations.json you must also change stationNames.json in the same order.---
 I mainly used Dutch streams, most of them I found here: https://hendrikjansen.nl/henk/streaming.html  But you can change them to your own favourite streaming radio channels.
     
 ## Roughly setup (for details, check the urls): 
@@ -17,9 +17,9 @@ I mainly used Dutch streams, most of them I found here: https://hendrikjansen.nl
     You can start off with the instructions for the wiring etc on the original seniorRadio here:  
     https://github.com/Bunborn/seniorRadio 
     Instructions for setting up the Rpi into headless mode etc
-    https://www.instructables.com/id/Senior-Radio-Raspberry-Pi
-    https://opensource.com/article/19/11/pyradio
-    https://projects-raspberry.com/fireside-internet-radio-player-for-elderly-users-built-with-raspberry-pi
+    * https://www.instructables.com/id/Senior-Radio-Raspberry-Pi
+    * https://opensource.com/article/19/11/pyradio
+    * https://projects-raspberry.com/fireside-internet-radio-player-for-elderly-users-built-with-raspberry-pi
 
 2. Install GIT 
     Open a terminal and clone this repo by typing: git clone https://github.com/rspbrrypi/seniorRadio.git
