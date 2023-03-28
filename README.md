@@ -1,26 +1,48 @@
 # seniorRadio
-Project to make an accessible device for internet radio
+Project to make an simple internet radio for Raspberry Pi; I used a Pi Zero W. Easy to use, and cheap in electrical costs.
+<img src="https://github.com/rspbrrypi/seniorRadio/blob/master/Pizero-internetradio.jpg?raw=true" width="200px" >
+It has 3 rotating knobs for volume, change channel and brightness for LCD-screen. 
+It also has a pause button and a shutdown button to safely turn of the Pi.
 
-<img src="https://i.imgur.com/R6uO1aB.jpg" width="200px" >>
+This project is mainly based on this seniorRadio Project: https://github.com/Bunborn/seniorRadio
+Difference is that I left out the LED. Instead I used that pin (17) for a *shutdown button* on my Raspberry Pi to completely turn of the radio and the Pi.
+Also I added a *LCD Screen* so you can see which station you're listening to.
 
-The Senior Radio project is an accessible designed internet radio device with both hardware and software components. It is intended to be used for users familiar with controlling a pocket radio where dials controls volume and the selected radio station. The project is made with a user-centered design, focused on a user who want a similar size and controls as a standard handheld radio.
-
-It was built to satisfy the needs of allowing impaired individuals be able to listen to the thousands of different internet streaming content that is usually only normally available through an internet browser. Many people do not have the ability to use such a device easily, so this design aims to make a familiar interface for a modern technology.
-
-The python program is meant to be self-documenting. It reads IO and calls VLC as an audio player to play whatever is selected. It reads and writes to a local json file to store the state of the radio and reads an online json file to load into the list of radio station URLs.
-
-Instructions for setting up the Rpi into headless mode, loading the software, and creating the physical IO is online at <b>https://www.instructables.com/id/Senior-Radio-Raspberry-Pi</b>
-
-Inspired by these other awesome creations:
-
-https://opensource.com/article/19/11/pyradio
-
-https://projects-raspberry.com/fireside-internet-radio-player-for-elderly-users-built-with-raspberry-pi
-
-Newly added 17-12-2022  
-I left out the LED. Instead I used that pin (17) for a shutdown button on my Raspberry Pi to completely turn of the radio and the Pi.
-Also I added a LCD Screen so you can see which station you're listening to. I used a 16x02 LCD screen with I2C backpack. 
-This video explains very simple how to connect it: https://youtu.be/DHbLBTRpTWM
 Finally I added another file: stationNames.json. This list contains exactly the same radiostations as InternetStations.json only with a prettier output for the LCD. 
 Each station can contain a max of 16 chars or it won't fit the screen. So if you change the InternetStations.json you must also change stationNames.json in the same order.
-I mainly used Dutch streams, most of them I found here: https://hendrikjansen.nl/henk/streaming.html  
+I mainly used Dutch streams, most of them I found here: https://hendrikjansen.nl/henk/streaming.html  But you can change them to your own favourite streaming radio channels.
+    
+## Roughly setup (for details, check the urls): 
+1. Install an OS on your Raspberry Pi, connect to internet & setup SSH connection
+    You can start off with the instructions for the wiring etc on the original seniorRadio here:  
+    https://github.com/Bunborn/seniorRadio 
+    Instructions for setting up the Rpi into headless mode etc
+    https://www.instructables.com/id/Senior-Radio-Raspberry-Pi
+    https://opensource.com/article/19/11/pyradio
+    https://projects-raspberry.com/fireside-internet-radio-player-for-elderly-users-built-with-raspberry-pi
+
+2. Install GIT 
+    Open a terminal and clone this repo by typing: git clone https://github.com/rspbrrypi/seniorRadio.git
+
+3. Install VLC
+   See: https://pimylifeup.com/raspberry-pi-vlc/
+
+4. (optional) Install a SOUNDCARD if you use a Pi Zero (I used a guitar interface adapter)
+    Instructions you'll find here: https://circuitdigest.com/microcontroller-projects/how-to-use-usb-audio-device-and-microphone-on-raspberry-pi-zero-w
+ 
+5. LCD
+  Connect your LCD-screen.  I used a 16x02 LCD screen with I2C backpack. 
+  This video explains very simple how to connect it: https://youtu.be/DHbLBTRpTWM
+ 
+6. Setup to start your radio at boot with CRONTAB
+   https://www.cyberciti.biz/faq/linux-execute-cron-job-after-system-reboot/
+    Open a terminal and type crontab -e to open up the crontab.
+    Add the following line:
+     @reboot sleep 180 && python3 /home/radio/seniorRadio/seniorRadio.py
+    Save and exit. Reboot your pi. Change the time (180 seconds) to whatever time your OS needs to load before starting the radio.
+
+NB
+If you pause the radio, and start playing the radio again, it will take on from the song from where you paused and then stops. 
+Just rotate the channel knob forwards and back to the channel you want to listen to.
+
+
