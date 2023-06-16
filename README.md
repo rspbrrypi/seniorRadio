@@ -1,6 +1,6 @@
 # seniorRadio
 Project to make an simple internet radio for Raspberry Pi; I used a Pi Zero W. Easy to use, and cheap in electrical costs.
-<img src="https://github.com/rspbrrypi/seniorRadio/blob/master/Pizero-internetradio.jpg?raw=true" width="200px" >  
+<img src="https://github.com/rspbrrypi/seniorRadio/blob/master/internetradio.jpg?raw=true" width="200px" >  
 The radio has 3 rotating knobs for volume, change channel and brightness for LCD-screen. 
 It also has a pause button and a shutdown button to safely turn of the Pi.  
 
@@ -46,3 +46,8 @@ If you pause the radio, and start playing the radio again, it will take on from 
 Just rotate the channel knob forwards and back to the channel you want to listen to.
 
 
+<img src="https://github.com/rspbrrypi/seniorRadio/blob/master/internetradio_voorkant.jpg?raw=true" width="200px" >  
+Just rotate the channel knob forwards and back to the channel you want to listen to.
+
+
+<img src="https://github.com/rspbrrypi/seniorRadio/blob/master/binnenkant_internetradio.jpg?raw=true" width="200px" >  
