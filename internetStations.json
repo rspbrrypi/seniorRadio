@@ -1,7 +1,7 @@
 {
     "stationLinks":[ "https://stream.player.arrow.nl/arrow",
         "https://i4.streams.ovh/sc/bluesrad/stream",
-        "https://playerservices.streamtheworld.com/KINK.mp3",
+        "https://playerservices.streamtheworld.com/api/livestream-redirect/KINK.mp3",
         "https://icecast.omroep.nl/radio1-bb-mp3",
         "https://icecast.omroep.nl/radio2-bb-mp3",
         "https://icecast.omroep.nl/3fm-bb-mp3",
